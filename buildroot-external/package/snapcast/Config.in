@@ -3,6 +3,7 @@ config BR2_PACKAGE_SNAPCAST
 	depends on BR2_TOOLCHAIN_HAS_THREADS
 	depends on BR2_INSTALL_LIBSTDCPP
 	select BR2_PACKAGE_AIXLOG
+	select BR2_PACKAGE_JSONRPCPP
 	select BR2_PACKAGE_POPL
 	help
 	  Synchronous multi-room audio player
