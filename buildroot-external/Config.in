@@ -1,0 +1,1 @@
+#source "$BR2_EXTERNAL_SNAPOS_PATH/package/snapcast/Config.in"
