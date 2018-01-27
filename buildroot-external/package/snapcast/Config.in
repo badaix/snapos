@@ -1,0 +1,13 @@
+config BR2_PACKAGE_SNAPCAST
+	bool "Snapcast"
+	depends on BR2_TOOLCHAIN_HAS_THREADS
+	depends on BR2_INSTALL_LIBSTDCPP
+	select BR2_PACKAGE_AIXLOG
+	select BR2_PACKAGE_POPL
+	help
+	  Synchronous multi-room audio player
+	  
+	  https://github.com/badaix/snapcast
+
+comment "Snapcast needs a toolchain w/ C++, threads"
+	depends on !BR2_INSTALL_LIBSTDCPP || !BR2_TOOLCHAIN_HAS_THREADS

@@ -1,0 +1,10 @@
+config BR2_PACKAGE_AIXLOG
+	bool "aixlog"
+	depends on BR2_INSTALL_LIBSTDCPP
+	help
+	  Header-only C++ logging library
+
+	  https://github.com/badaix/aixlog
+
+comment "aixlog needs a toolchain w/ C++"
+	depends on !BR2_INSTALL_LIBSTDCPP
