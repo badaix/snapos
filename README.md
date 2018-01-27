@@ -1,0 +1,2 @@
+# snapos
+Snapcast OS
