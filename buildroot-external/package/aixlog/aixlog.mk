@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-AIXLOG_VERSION = v1.0.2
+AIXLOG_VERSION = v1.0.4
 AIXLOG_SITE = $(call github,badaix,aixlog,$(AIXLOG_VERSION))
 AIXLOG_LICENSE = MIT
 AIXLOG_LICENSE_FILES = copying.txt

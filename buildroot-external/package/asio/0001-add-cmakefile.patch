@@ -1,0 +1,8 @@
+--- ./CMakeLists.txt
++++ ./CMakeLists.txt	2018-02-03 22:59:18.313315057 +0100
+@@ -0,0 +1,5 @@
++cmake_minimum_required(VERSION 2.4) 
++
++project(asio)
++SET(CMAKE_INSTALL_INCLUDEDIR include CACHE PATH "Output directory for header files")
++install(DIRECTORY asio/include/ DESTINATION "${CMAKE_INSTALL_INCLUDEDIR}")

@@ -1,0 +1,11 @@
+config BR2_PACKAGE_ASIO
+	bool "asio"
+	depends on BR2_TOOLCHAIN_HAS_THREADS
+	depends on BR2_INSTALL_LIBSTDCPP
+	help
+	  Asio C++ Library
+
+	  http://think-async.com/Asio
+
+comment "asio needs a toolchain w/ C++"
+	depends on !BR2_INSTALL_LIBSTDCPP || !BR2_TOOLCHAIN_HAS_THREADS
