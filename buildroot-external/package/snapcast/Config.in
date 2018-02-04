@@ -6,6 +6,9 @@ config BR2_PACKAGE_SNAPCAST
 	select BR2_PACKAGE_JSONRPCPP
 	select BR2_PACKAGE_POPL
 	select BR2_PACKAGE_ASIO
+	select BR2_PACKAGE_AVAHI_LIBAVAHI_CLIENT
+	select BR2_PACKAGE_FLAC
+	select BR2_PACKAGE_LIBVORBIS
 	help
 	  Synchronous multi-room audio player
 	  
