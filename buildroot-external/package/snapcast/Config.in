@@ -14,5 +14,20 @@ config BR2_PACKAGE_SNAPCAST
 	  
 	  https://github.com/badaix/snapcast
 
+if BR2_PACKAGE_SNAPCAST
+
+config BR2_PACKAGE_SNAPCAST_CLIENT
+	bool "Snapclient"
+	default y
+	help
+	  Snapcast client
+
+config BR2_PACKAGE_SNAPCAST_SERVER
+	bool "Snapserver"
+	help
+	  Snapcast server
+
+endif
+
 comment "Snapcast needs a toolchain w/ C++, threads"
 	depends on !BR2_INSTALL_LIBSTDCPP || !BR2_TOOLCHAIN_HAS_THREADS
