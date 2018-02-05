@@ -1,16 +1,26 @@
 # SnapOS
 Snapcast OS is a [Buildroot](https://buildroot.org) based embedded [Linux](https://www.kernel.org) OS for [Snapcast](https://github.com/badaix/snapcast).
 There will be configurations for some boards, e.g. the Raspberry Pi 3 with WiFi and audio enabled, as well as packages for Snapcast and its dependencies.
-Currently snapserver and snapclient binaries are installed, but only snapclient will be started during boot.
 
 ## How-to
- 1. Download or clone [Buildroot](https://buildroot.org) 
- 2. Clone snapos to some directory
- 3. Navigate into Buildroot's root directory and define snapos as an external:
+ 1. [Download](https://buildroot.org/download.html) or [clone](https://github.com/buildroot/buildroot) [Buildroot](https://buildroot.org) 
+ 2. Clone SnapOS to some directory
+ 3. Navigate into Buildroot's root directory and define SnapOS as an [external](https://buildroot.org/downloads/manual/manual.html#outside-br-custom):
 ```
 buildroot-2017.11.2 $ make BR2_EXTERNAL=/PATH/TO/snapos/buildroot-external/ snapos_rpi3_defconfig
 ```
- 4. Now you will find the pre-selected `Snapcast` package under `External options  --->` in `make menuconfig`
+ 4. Now you will find the pre-selected `Snapclient` package under `External options  --->` in `make menuconfig`
+```
+    *** Snapcast OS (in /home/johannes/Develop/snapos/buildroot-external) ***
+[*] Snapcast
+[*]   Snapclient
+[ ]   Snapserver
+-*- aixlog
+-*- jsonrpc++
+-*- popl
+-*- asio
+-*- libavahi-client
+```
  5. Run `make`, wait, and find the image in `output/image/sdcard.img`
  6. Write the image to an sd card, e.g. (with `sdX` = your sd card's device name):
  ```
