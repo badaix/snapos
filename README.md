@@ -11,7 +11,7 @@ buildroot-2017.11.2 $ make BR2_EXTERNAL=/PATH/TO/snapos/buildroot-external/ snap
 ```
  4. Now you will find the pre-selected `Snapclient` package under `External options  --->` in `make menuconfig`
 ```
-    *** Snapcast OS (in /home/johannes/Develop/snapos/buildroot-external) ***
+    *** Snapcast OS (in /PATH/TO/snapos/buildroot-external) ***
 [*] Snapcast
 [*]   Snapclient
 [ ]   Snapserver
