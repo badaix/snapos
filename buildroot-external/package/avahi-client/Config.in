@@ -1,8 +1,0 @@
-config BR2_PACKAGE_AVAHI_LIBAVAHI_CLIENT
-	bool "libavahi-client"
-	select BR2_PACKAGE_AVAHI
-	select BR2_PACKAGE_AVAHI_DAEMON
-	select BR2_PACKAGE_DBUS
-	help
-	  Macro package for libavahi-client
-
