@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-JSONRPCPP_VERSION = v1.0.1
+JSONRPCPP_VERSION = v1.1.0
 JSONRPCPP_SITE = $(call github,badaix,jsonrpcpp,$(JSONRPCPP_VERSION))
 JSONRPCPP_LICENSE = MIT
 JSONRPCPP_LICENSE_FILES = LICENSE
