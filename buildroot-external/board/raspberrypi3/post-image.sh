@@ -33,6 +33,19 @@ dtparam=audio=on
 __EOF__
 		fi
 		;;
+		--speedup-boot)
+		if ! grep -qE '^bootcode_delay=' "${BINARIES_DIR}/rpi-firmware/config.txt"; then
+			echo "Setting boot delays to 0"
+			cat << __EOF__ >> "${BINARIES_DIR}/rpi-firmware/config.txt"
+
+# Speed up boot
+bootcode_delay=0
+boot_delay=0
+boot_delay_ms=0
+disable_splash=1
+__EOF__
+		fi
+		;;
 		--raise-volume)
 		if grep -qE '^ENV{ppercent}:=\"75%\"' "${TARGET_DIR}/usr/share/alsa/init/default"; then
 			echo "Raising alsa default volume to 100%."
