@@ -19,7 +19,6 @@ buildroot-2017.11.2 $ make BR2_EXTERNAL=/PATH/TO/snapos/buildroot-external/ snap
 -*- jsonrpc++
 -*- popl
 -*- asio
--*- libavahi-client
 ```
  5. Run `make`, wait, and find the image in `output/image/sdcard.img`
  6. Write the image to an sd card, e.g. (with `sdX` = your sd card's device name):
