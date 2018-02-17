@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-SNAPCAST_VERSION = e9ff66e7
+SNAPCAST_VERSION = b34f8a6e
 SNAPCAST_SITE = $(call github,badaix,snapcast,$(SNAPCAST_VERSION))
 SNAPCAST_DEPENDENCIES = libogg alsa-lib avahi # libstdcpp libatomic libflac libvorbisidec
 SNAPCAST_LICENSE = GPL-3.0+
