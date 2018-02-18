@@ -10,19 +10,6 @@ GENIMAGE_TMP="${BUILD_DIR}/genimage.tmp"
 for arg in "$@"
 do
 	case "${arg}" in
-		--add-wlan0)
-		if ! grep -qE '^iface wlan0' "${TARGET_DIR}/etc/network/interfaces"; then
-			echo "Adding wlan0 to /etc/network/interfaces."
-			cat << __EOF__ >> "${TARGET_DIR}/etc/network/interfaces"
-
-auto wlan0
-iface wlan0 inet dhcp
-        pre-up wpa_supplicant -B -Dwext -iwlan0 -c/etc/wpa_supplicant.conf
-        post-down killall -q wpa_supplicant
-        wait-delay 15
-__EOF__
-		fi
-		;;
 		--add-audio)
 		if ! grep -qE '^dtparam=audio=' "${BINARIES_DIR}/rpi-firmware/config.txt"; then
 			echo "Adding 'dtparam=audio=on' to config.txt (enables audio)."
@@ -44,13 +31,6 @@ boot_delay=0
 boot_delay_ms=0
 disable_splash=1
 __EOF__
-		fi
-		;;
-		--raise-volume)
-		if grep -qE '^ENV{ppercent}:=\"75%\"' "${TARGET_DIR}/usr/share/alsa/init/default"; then
-			echo "Raising alsa default volume to 100%."
-			sed -i -e 's/ENV{ppercent}:="75%"/ENV{ppercent}:="100%"/g' "${TARGET_DIR}/usr/share/alsa/init/default"
-			sed -i -e 's/ENV{pvolume}:="-20dB"/ENV{pvolume}:="4dB"/g' "${TARGET_DIR}/usr/share/alsa/init/default"
 		fi
 		;;
 		--add-pi3-miniuart-bt-overlay)
