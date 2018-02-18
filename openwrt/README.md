@@ -1,11 +1,11 @@
-## OpenWrt/LEDE (Cross compile)
+# OpenWrt/LEDE based SnapOS
 Cross compilation for OpenWrt is done with the [OpenWrt build system](https://wiki.openwrt.org/about/toolchain) on a Linux host machine:  
 https://wiki.openwrt.org/doc/howto/build
 
 For LEDE:
 https://lede-project.org/docs/guide-developer/quickstart-build-images
 
-### OpenWrt/LEDE build system setup
+## OpenWrt/LEDE build system setup
 https://wiki.openwrt.org/doc/howto/buildroot.exigence
 
 Clone OpenWrt to some place in your home directory (`<buildroot dir>`)
@@ -22,12 +22,10 @@ Download and install available feeds
     $ ./scripts/feeds update -a
     $ ./scripts/feeds install -a
 
-Within the `<buildroot dir>` directory create symbolic links to the Snapcast source directory `<snapcast source>` and to the OpenWrt Makefile:
+Within the `<buildroot dir>` directory create a snapcast directory and copy the Makefile into it:
 
     $ mkdir -p <buildroot dir>/package/sxx/snapcast
-    $ cd <buildroot dir>/package/sxx/snapcast
-    $ ln -s <snapcast source> src
-    $ ln -s <snapcast source>/openWrt/Makefile.openwrt Makefile
+    $ cp Makefile <buildroot dir>/package/sxx/snapcast
 
 Build  
 in menuconfig in `sxx/snapcast` select `Compile snapserver` and/or `Compile snapclient`
