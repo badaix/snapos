@@ -1,6 +1,6 @@
-# SnapOS
-Snapcast OS is a [Buildroot](https://buildroot.org) based embedded [Linux](https://www.kernel.org) OS for [Snapcast](https://github.com/badaix/snapcast).
-There will be configurations for some boards, e.g. the Raspberry Pi 3 with WiFi and audio enabled, as well as packages for Snapcast and its dependencies.
+# Buildroot based SnapOS
+[Buildroot](https://buildroot.org) based embedded [Linux](https://www.kernel.org) OS for [Snapcast](https://github.com/badaix/snapcast).
+There are configurations for some boards, e.g. the Raspberry Pi 3 with WiFi and audio enabled, as well as packages for Snapcast and its dependencies.
 
 ## How-to
  1. [Download](https://buildroot.org/download.html) or [clone](https://github.com/buildroot/buildroot) [Buildroot](https://buildroot.org) 
@@ -27,4 +27,15 @@ buildroot-2017.11.2 $ make BR2_EXTERNAL=/PATH/TO/snapos/buildroot-external/ snap
  ```
  7. Boot your device. Snapclient will start automatically
  8. Ethernet is configured to use DHCP. Login with user `root` and password `snapcast`
- 
+
+### WiFi
+To enable WiFi, add the WiFi's SSID and password to `/etc/wpa_supplicant.conf`:
+```
+ctrl_interface=/var/run/wpa_supplicant
+ap_scan=1
+
+network={
+    ssid=<Your SSID>
+    psk="<Your Key>"
+}
+```
