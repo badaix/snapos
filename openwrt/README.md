@@ -1,4 +1,4 @@
-# OpenWrt/LEDE based SnapOS
+# OpenWrt/LEDE flavored SnapOS
 Cross compilation for OpenWrt is done with the [OpenWrt build system](https://wiki.openwrt.org/about/toolchain) on a Linux host machine:  
 https://wiki.openwrt.org/doc/howto/build
 
