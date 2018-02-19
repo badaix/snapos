@@ -15,8 +15,8 @@ PKG_USE_MIPS16 := 0
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/badaix/snapcast.git
-PKG_SOURCE_VERSION:=v0.12.0
-#7927c7d1d75a79a11444ed077973359b1dd0ca8c
+PKG_SOURCE_VERSION:=f9c0be9b1679705b8877dc6dcd9cf7a25dd0b6b0
+#v0.12.0
 PKG_BUILD_DIR:=$(BUILD_DIR)/snapcast-$(PKG_VERSION)
 
 include $(INCLUDE_DIR)/package.mk
@@ -125,7 +125,7 @@ define Package/snapserver/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/server/snapserver $(1)/usr/bin/
 	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/openWrt/snapserver.init $(1)/etc/init.d/snapserver
+	$(INSTALL_BIN) ./files/snapserver.init $(1)/etc/init.d/snapserver
 	$(INSTALL_DIR) $(1)/etc/default
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/server/debian/snapserver.default $(1)/etc/default/snapserver
 endef
@@ -134,7 +134,7 @@ define Package/snapclient/install
 	$(INSTALL_DIR) $(1)/usr/bin
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/client/snapclient $(1)/usr/bin/
 	$(INSTALL_DIR) $(1)/etc/init.d
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/openWrt/snapclient.init $(1)/etc/init.d/snapclient
+	$(INSTALL_BIN) ./files/snapclient.init $(1)/etc/init.d/snapclient
 	$(INSTALL_DIR) $(1)/etc/default
 	$(INSTALL_BIN) $(PKG_BUILD_DIR)/client/debian/snapclient.default $(1)/etc/default/snapclient
 endef
