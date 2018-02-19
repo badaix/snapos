@@ -1,4 +1,4 @@
-# Buildroot based SnapOS
+# Buildroot flavored SnapOS
 [Buildroot](https://buildroot.org) based embedded [Linux](https://www.kernel.org) OS for [Snapcast](https://github.com/badaix/snapcast).
 There are configurations for some boards, e.g. the Raspberry Pi 3 with WiFi and audio enabled, as well as packages for Snapcast and its dependencies.
 
