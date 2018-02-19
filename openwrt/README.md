@@ -22,10 +22,10 @@ Download and install available feeds
     $ ./scripts/feeds update -a
     $ ./scripts/feeds install -a
 
-Within the `<buildroot dir>` directory create a snapcast directory and copy the Makefile into it:
+Within the `<buildroot dir>` directory create a snapcast directory and copy the contents from `<snapos dir>/openwrt/` into it:
 
     $ mkdir -p <buildroot dir>/package/sxx/snapcast
-    $ cp Makefile <buildroot dir>/package/sxx/snapcast
+    $ cp -r <snapos dir>/openwrt/* <buildroot dir>/package/sxx/snapcast
 
 Build  
 in menuconfig in `sxx/snapcast` select `Compile snapserver` and/or `Compile snapclient`
@@ -40,4 +40,7 @@ Rebuild Snapcast:
     $ make package/sxx/snapcast/clean
     $ make package/sxx/snapcast/compile
 
-The packaged `ipk` files are for OpenWrt in `<buildroot dir>/bin/ar71xx/packages/base/snap[client|server]_x.x.x_ar71xx.ipk` and for LEDE `<buildroot dir>/bin/packages/mips_24kc/base/snap[client|server]_x.x.x_mips_24kc.ipk`
+The packaged `ipk` files are for OpenWrt in  
+`<buildroot dir>/bin/ar71xx/packages/base/snap[client|server]_x.x.x_ar71xx.ipk`  
+and for LEDE  
+`<buildroot dir>/bin/packages/mips_24kc/base/snap[client|server]_x.x.x_mips_24kc.ipk`
