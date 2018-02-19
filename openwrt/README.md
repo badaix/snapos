@@ -22,10 +22,11 @@ Download and install available feeds
     $ ./scripts/feeds update -a
     $ ./scripts/feeds install -a
 
-Within the `<buildroot dir>` directory create a snapcast directory and copy the contents from `<snapos dir>/openwrt/` into it:
+Within the `<buildroot dir>` directory create a symbolic link to `<snapos dir>/openwrt/`:
 
-    $ mkdir -p <buildroot dir>/package/sxx/snapcast
-    $ cp -r <snapos dir>/openwrt/* <buildroot dir>/package/sxx/snapcast
+    $ mkdir -p <buildroot dir>/package/sxx
+    $ cd <buildroot dir>/package/sxx
+    $ ln -s <snapos dir>/openwrt/snapcast .
 
 Build  
 in menuconfig in `sxx/snapcast` select `Compile snapserver` and/or `Compile snapclient`
