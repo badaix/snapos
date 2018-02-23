@@ -19,6 +19,15 @@ iface wlan0 inet dhcp
 __EOF__
 		fi
 		;;
+		--mount-boot)
+		if ! grep -qE '^/dev/mmcblk0p1' "${TARGET_DIR}/etc/fstab"; then
+			mkdir -p "${TARGET_DIR}/boot"
+			echo "Adding mount point for /boot to /etc/fstab."
+			cat << __EOF__ >> "${TARGET_DIR}/etc/fstab"
+/dev/mmcblk0p1	/boot		vfat	defaults	0	2
+__EOF__
+		fi
+		;;
 		--raise-volume)
 		if grep -qE '^ENV{ppercent}:=\"75%\"' "${TARGET_DIR}/usr/share/alsa/init/default"; then
 			echo "Raising alsa default volume to 100%."
