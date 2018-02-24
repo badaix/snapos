@@ -29,7 +29,7 @@ buildroot-2017.11.2 $ make BR2_EXTERNAL=/PATH/TO/snapos/buildroot-external/ snap
  8. Ethernet is configured to use DHCP. Login with user `root` and password `snapcast`
 
 ### WiFi
-To enable WiFi, add the WiFi's SSID and password to `/etc/wpa_supplicant.conf`:
+To enable WiFi, add your WiFi's SSID and password to `/etc/wpa_supplicant.conf`:
 ```
 ctrl_interface=/var/run/wpa_supplicant
 ap_scan=1
@@ -39,3 +39,17 @@ network={
     psk="<Your Key>"
 }
 ```
+
+### External DAC
+You can activate support for external DACs by loading the appropriate device tree: 
+#### 1. Remove the driver for the onboard sound  
+Remove the line from `/boot/config.txt`:
+ ```
+ dtparam=audio=on
+ ```
+#### 2. Configure device tree overlay file  
+add your DAC's device tree (e.g. `hifiberry-dac`) to `/boot/config.txt`:
+```
+dtoverlay=<your DAC's device tree>
+```
+
