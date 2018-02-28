@@ -6,7 +6,6 @@
 #
 
 include $(TOPDIR)/rules.mk
-include $(INCLUDE_DIR)/target.mk
 
 PKG_NAME := snapcast
 PKG_VERSION := 0.13.0
@@ -15,29 +14,18 @@ PKG_USE_MIPS16 := 0
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/badaix/snapcast.git
-PKG_SOURCE_VERSION:=f9c0be9b1679705b8877dc6dcd9cf7a25dd0b6b0
+PKG_SOURCE_VERSION:=b9393fc87fc876f8522b2064b616cc564c5ae078
 #v0.12.0
 PKG_BUILD_DIR:=$(BUILD_DIR)/snapcast-$(PKG_VERSION)
 
 include $(INCLUDE_DIR)/package.mk
-
-ENDIANNESS:=LITTLE
-ifeq ($(ARCH),mips)
-ENDIANNESS:=BIG
-endif
-ifeq ($(ARCH),armeb)
-ENDIANNESS:=BIG
-endif
-ifeq ($(ARCH),powerpc)
-ENDIANNESS:=BIG
-endif
-
+include $(INCLUDE_DIR)/cmake.mk
 
 define Package/snapcast/Default
 	SECTION := sxx
 	CATEGORY := Sxx
 	TITLE := snapcast
-	DEPENDS := +libstdcpp +libavahi-client +libatomic +libogg +libflac
+	DEPENDS := +libstdcpp +libavahi-client +libatomic +libogg +libflac +libasio +libpopl +libaixlog +libjsonrpcpp
 endef
 
 define Package/snapcast/description/Default
@@ -97,8 +85,14 @@ define Package/snapcast/config
 	endmenu
 endef
 
-#define Build/Prepare
-#	$(call Build/Prepare/Default)
+
+define Build/Prepare
+	# copy package config file for tremor, 
+	# as this is not done by the original package and snapcast relies on it
+	$(call Build/Prepare/Default)
+	$(INSTALL_DIR) $(STAGING_DIR)/usr/lib/pkgconfig/
+	$(INSTALL_DATA) ./files/vorbisidec.pc $(STAGING_DIR)/usr/lib/pkgconfig/
+
 #	$(CP) -r src/common/ $(PKG_BUILD_DIR)
 #	$(CP) -r src/message/ $(PKG_BUILD_DIR)
 #	$(CP) -r src/externals/ $(PKG_BUILD_DIR)
@@ -107,15 +101,8 @@ endef
 #		$(CP) -r src/server/ $(PKG_BUILD_DIR),)
 #	$(if $(CONFIG_PACKAGE_snapclient), \
 #		$(CP) -r src/client/ $(PKG_BUILD_DIR),)
-#endef
-
-define Build/Compile
-	$(if $(CONFIG_PACKAGE_snapserver), \
-		$(call Build/Compile/Default, -C server TARGET=OPENWRT ENDIAN=$(ENDIANNESS)),)
-
-	$(if $(CONFIG_PACKAGE_snapclient), \
-		$(call Build/Compile/Default, -C client TARGET=OPENWRT ENDIAN=$(ENDIANNESS)),)
 endef
+
 
 define Package/snapcast/Default/install
 	true
@@ -123,7 +110,7 @@ endef
 
 define Package/snapserver/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/server/snapserver $(1)/usr/bin/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/snapserver $(1)/usr/bin/
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/snapserver.init $(1)/etc/init.d/snapserver
 	$(INSTALL_DIR) $(1)/etc/default
@@ -132,7 +119,7 @@ endef
 
 define Package/snapclient/install
 	$(INSTALL_DIR) $(1)/usr/bin
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/client/snapclient $(1)/usr/bin/
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/bin/snapclient $(1)/usr/bin/
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/snapclient.init $(1)/etc/init.d/snapclient
 	$(INSTALL_DIR) $(1)/etc/default
