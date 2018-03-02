@@ -14,9 +14,10 @@ PKG_USE_MIPS16 := 0
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/badaix/snapcast.git
-PKG_SOURCE_VERSION:=b9393fc87fc876f8522b2064b616cc564c5ae078
+PKG_SOURCE_VERSION:=a3f309e0da291dcbec14520f4f8f44a739184ddf
 #v0.12.0
 PKG_BUILD_DIR:=$(BUILD_DIR)/snapcast-$(PKG_VERSION)
+PKG_BUILD_DEPENDS := asio popl aixlog
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/cmake.mk
@@ -25,7 +26,7 @@ define Package/snapcast/Default
 	SECTION := sxx
 	CATEGORY := Sxx
 	TITLE := snapcast
-	DEPENDS := +libstdcpp +libavahi-client +libatomic +libogg +libflac +libasio +libpopl +libaixlog +libjsonrpcpp
+	DEPENDS := +libstdcpp +libavahi-client +libatomic +libogg +libflac
 endef
 
 define Package/snapcast/description/Default
