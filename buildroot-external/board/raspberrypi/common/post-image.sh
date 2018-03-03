@@ -12,6 +12,10 @@ do
 
 # Enable audio (loads snd_bcm2835)
 dtparam=audio=on
+
+# For external DACs comment "dtparam=audio=on" and enter your DAC's
+# dt-overlay below and uncomment, e.g. "dtoverlay=hifiberry-dacplus"
+# dtoverlay=<your DAC's device tree>
 __EOF__
 		fi
 		;;
