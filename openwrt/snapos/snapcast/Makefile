@@ -23,8 +23,8 @@ include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/cmake.mk
 
 define Package/snapcast/Default
-	SECTION := sxx
-	CATEGORY := Sxx
+	SECTION := multimedia
+	CATEGORY := Multimedia
 	TITLE := snapcast
 	DEPENDS := +libstdcpp +libavahi-client +libatomic +libogg +libflac
 endef
@@ -71,17 +71,17 @@ endef
 define Package/snapcast/config
  	menu "Select snapcast Options"
 		depends on PACKAGE_snapcast
-		comment "Choose server or client to compile"
+		comment "Choose server or client"
 		config PACKAGE_snapserver
-			prompt "Compile snapserver"
+			prompt "snapserver"
 			help
-				Compile Snapcast server
+				Snapcast server
 			default n
 
 		config PACKAGE_snapclient
-			prompt "Compile snapclient"
+			prompt "snapclient"
 			help
-				Compile Snapcast client
+				Snapcast client
 			default n
 	endmenu
 endef
