@@ -26,11 +26,11 @@ $ ./scripts/feeds install -a
 ```
 
 ### Add snapcast
-Within the `<wrt dir>/package` directory create a symbolic link to `<snapos dir>/openwrt/snapos`: 
+Within the `<wrt dir>/package` directory create a symbolic link to `<snapos dir>/openwrt`: 
 
 ```
 $ cd <wrt dir>
-$ ln -s <snapos dir>/openwrt/snapos/ package/
+$ ln -s <snapos dir>/openwrt package/snapos
 ```
 
 ### Build  
