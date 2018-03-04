@@ -47,8 +47,8 @@ $ make
 
 ```
 $ cd <wrt dir>
-$ make package/sxx/snapcast/clean
-$ make package/sxx/snapcast/compile
+$ make package/snapos/snapcast/clean
+$ make package/snapos/snapcast/compile
 ```
 
 The packaged `ipk` files for OpenWrt are in  
