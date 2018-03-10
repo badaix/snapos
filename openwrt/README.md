@@ -11,7 +11,7 @@ https://wiki.openwrt.org/doc/howto/buildroot.exigence
 ### Get OpenWrt/LEDE
 Clone OpenWrt to some place in your home directory (`<wrt dir>`)
 
-    $ git clone git://git.openwrt.org/15.05/openwrt.git
+    $ git clone https://github.com/openwrt/openwrt.git
 
 ...LEDE 
 
