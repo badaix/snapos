@@ -34,7 +34,7 @@ $ ln -s <snapos dir>/openwrt package/snapos
 ```
 
 ### Build  
-in menuconfig in `Multimedia/snapcast` select `snapserver` and/or `snapclient`
+In `make menuconfig` navigate to `Multimedia/snapcast` and select `snapserver` and/or `snapclient`
 
 ```
 $ cd <wrt dir>
@@ -44,14 +44,16 @@ $ make
 ```
 
 #### Rebuild Snapcast:
-
+If there is an update for snapcast available, it can be rebuilt like this:
 ```
 $ cd <wrt dir>
 $ make package/snapos/snapcast/clean
 $ make package/snapos/snapcast/compile
 ```
 
-The packaged `ipk` files for OpenWrt are in  
-`<wrt dir>/bin/ar71xx/packages/base/snap[client|server]_x.x.x_ar71xx.ipk`  
-and for LEDE  
-`<wrt dir>/bin/packages/mips_24kc/base/snap[client|server]_x.x.x_mips_24kc.ipk`
+The packaged `ipk` files are in  
+```
+<wrt dir>/bin/<pkg_arch>/packages/base/snapclient_x.x.x_<pkg_arch>.ipk
+<wrt dir>/bin/<pkg_arch>/packages/base/snapserver_x.x.x_<pkg_arch>.ipk
+```
+
