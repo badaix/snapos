@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-ASIO_VERSION = asio-1-10-8
+ASIO_VERSION = asio-1-12-0
 ASIO_SITE = $(call github,chriskohlhoff,asio,$(ASIO_VERSION))
 ASIO_LICENSE = Boost Software License 1.0
 ASIO_LICENSE_FILES = COPYING, LICENSE_1_0.txt

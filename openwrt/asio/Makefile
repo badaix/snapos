@@ -9,12 +9,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=libasio
-PKG_VERSION:=1.10.8
+PKG_VERSION:=1.12.0
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/chriskohlhoff/asio.git
-PKG_SOURCE_VERSION:=asio-1-10-8
+PKG_SOURCE_VERSION:=asio-1-12-0
 
 PKG_FIXUP:=autoreconf
 PKG_INSTALL:=1
