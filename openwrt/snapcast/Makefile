@@ -25,7 +25,7 @@ define Package/snapcast/Default
 	SECTION := multimedia
 	CATEGORY := Multimedia
 	TITLE := snapcast
-	DEPENDS := +libstdcpp +libavahi-client +libatomic +libogg +libflac
+	DEPENDS := +libstdcpp +libatomic +libogg +libflac
 endef
 
 define Package/snapcast/description/Default

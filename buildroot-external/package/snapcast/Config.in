@@ -1,13 +1,8 @@
 config BR2_PACKAGE_SNAPCAST
 	bool "Snapcast"
-	depends on BR2_USE_MMU # avahi
-	depends on !BR2_STATIC_LIBS # avahi
 	depends on BR2_TOOLCHAIN_HAS_THREADS
 	depends on BR2_INSTALL_LIBSTDCPP
 	select BR2_PACKAGE_AIXLOG
-	select BR2_PACKAGE_AVAHI
-	select BR2_PACKAGE_AVAHI_DAEMON
-	select BR2_PACKAGE_DBUS
 	select BR2_PACKAGE_POPL
 	select BR2_PACKAGE_ASIO
 	select BR2_PACKAGE_FLAC
