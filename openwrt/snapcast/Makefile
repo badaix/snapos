@@ -8,14 +8,13 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME := snapcast
-PKG_VERSION := 0.13.1
+PKG_VERSION := 0.14.0
 PKG_RELEASE := $(PKG_SOURCE_VERSION)
 PKG_USE_MIPS16 := 0
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/badaix/snapcast.git
-PKG_SOURCE_VERSION:=3dfc0cb
-#v0.13.0
+PKG_SOURCE_VERSION:=v0.14.0
 PKG_BUILD_DIR:=$(BUILD_DIR)/snapcast-$(PKG_VERSION)
 PKG_BUILD_DEPENDS := asio popl aixlog
 

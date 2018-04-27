@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-AIXLOG_VERSION = v1.1.0
+AIXLOG_VERSION = v1.2.0
 AIXLOG_SITE = $(call github,badaix,aixlog,$(AIXLOG_VERSION))
 AIXLOG_LICENSE = MIT
 AIXLOG_LICENSE_FILES = LICENSE
