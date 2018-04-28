@@ -23,6 +23,7 @@ PKG_BUILD_PARALLEL:=1
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/cmake.mk
 
+CMAKE_OPTIONS += -DBUILD_EXAMPLE=OFF
 
 define Package/libpopl
   SECTION:=libs

@@ -9,12 +9,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=libaixlog
-PKG_VERSION:=1.2.0
+PKG_VERSION:=1.2.1
 PKG_RELEASE:=1
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/badaix/aixlog.git
-PKG_SOURCE_VERSION:=v1.2.0
+PKG_SOURCE_VERSION:=v1.2.1
 
 PKG_FIXUP:=autoreconf
 PKG_INSTALL:=1
@@ -23,6 +23,7 @@ PKG_BUILD_PARALLEL:=1
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/cmake.mk
 
+CMAKE_OPTIONS += -DBUILD_EXAMPLE=OFF
 
 define Package/libaixlog
   SECTION:=libs
