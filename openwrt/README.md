@@ -53,7 +53,7 @@ $ make package/snapos/snapcast/compile
 
 The packaged `ipk` files are in  
 ```
-<wrt dir>/bin/<pkg_arch>/packages/base/snapclient_x.x.x_<pkg_arch>.ipk
-<wrt dir>/bin/<pkg_arch>/packages/base/snapserver_x.x.x_<pkg_arch>.ipk
+<wrt dir>/bin/packages/<pkg_arch>/base/snapclient_x.x.x_<pkg_arch>.ipk
+<wrt dir>/bin/packages/<pkg_arch>/base/snapserver_x.x.x_<pkg_arch>.ipk
 ```
 
