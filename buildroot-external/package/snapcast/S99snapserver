@@ -5,11 +5,11 @@ DAEMON=/usr/bin/$NAME
 PIDFILE=/var/run/$NAME/pid
 
 [ -r /etc/default/$NAME ] && . /etc/default/$NAME
-SNAPCAST_OPTS="-d $SNAPCAST_OPTS"
+SNAPSERVER_OPTS="-d $SNAPSERVER_OPTS"
 
 start() {
 	echo -n "Starting $NAME: "
-	start-stop-daemon --start --quiet --pidfile "$PIDFILE" --exec "$DAEMON" -- $SNAPCAST_OPTS
+	start-stop-daemon --start --quiet --pidfile "$PIDFILE" --exec "$DAEMON" -- $SNAPSERVER_OPTS
 	[ $? = 0 ] && echo "OK" || echo "FAIL"
 }
 
