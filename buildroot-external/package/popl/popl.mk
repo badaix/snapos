@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-POPL_VERSION = v1.1.0
+POPL_VERSION = v1.2.0
 POPL_SITE = $(call github,badaix,popl,$(POPL_VERSION))
 POPL_LICENSE = MIT
 POPL_LICENSE_FILES = LICENSE
