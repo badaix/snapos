@@ -7,6 +7,10 @@ PIDFILE=/var/run/$NAME/pid
 [ -r /etc/default/$NAME ] && . /etc/default/$NAME
 SNAPCLIENT_OPTS="-d $SNAPCLIENT_OPTS"
 
+if [ "$START_SNAPCLIENT" != "true" ] ; then
+  exit 0
+fi
+
 start() {
 	echo -n "Starting $NAME: "
 	start-stop-daemon --start --quiet --pidfile "$PIDFILE" --exec "$DAEMON" -- $SNAPCLIENT_OPTS
