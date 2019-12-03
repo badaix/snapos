@@ -20,12 +20,12 @@ buildroot-2017.11.2 $ make BR2_EXTERNAL=/PATH/TO/snapos/buildroot-external/ snap
 -*- popl
 -*- asio
 ```
- 5. Run `make`, wait, and find the image in `output/image/sdcard.img`
+ 5. Run `make`, wait, and find the image in `image/sdcard.img`
  6. Write the image to an sd card, e.g. (with `sdX` = your sd card's device name):
  ```
  buildroot-2017.11.2 $ sudo dd bs=4M if=output/images/sdcard.img of=/dev/sdX conv=fsync status=progress
  ```
- 7. Boot your device. Snapclient will start automatically
+ 7. Boot your device. Snapclient will start automatically (make sure that `/etc/default/snapclient` contains the line `START_SNAPCLIENT=true`)
  8. Ethernet is configured to use DHCP. Login with user `root` and password `snapcast`
 
 ### WiFi
@@ -35,7 +35,7 @@ ctrl_interface=/var/run/wpa_supplicant
 ap_scan=1
 
 network={
-    ssid=<Your SSID>
+    ssid="<Your SSID>"
     psk="<Your Key>"
 }
 ```
@@ -48,7 +48,7 @@ Remove the line from `/boot/config.txt`:
  dtparam=audio=on
  ```
 #### 2. Configure device tree overlay file  
-add your DAC's device tree (e.g. `hifiberry-dac`) to `/boot/config.txt`:
+add your DAC's device tree (e.g. `hifiberry-dacplus`) to `/boot/config.txt`:
 ```
 dtoverlay=<your DAC's device tree>
 ```
