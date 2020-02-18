@@ -1,21 +1,20 @@
-# OpenWrt/LEDE flavored SnapOS
-Cross compilation for OpenWrt is done with the [OpenWrt build system](https://wiki.openwrt.org/about/toolchain) on a Linux host machine:  
-https://wiki.openwrt.org/doc/howto/build
+# OpenWrt flavored SnapOS
+Cross compilation for OpenWrt is done with the [OpenWrt build system](https://openwrt.org/docs/guide-developer/build-system/start) on a Linux host machine:  
+https://openwrt.org/docs/guide-developer/build-system/install-buildsystem
 
-For LEDE: 
-https://lede-project.org/docs/guide-developer/quickstart-build-images
+## OpenWrt build system setup
+https://openwrt.org/docs/guide-developer/build-system/install-buildsystem
 
-## OpenWrt/LEDE build system setup
-https://wiki.openwrt.org/doc/howto/buildroot.exigence
-
-### Get OpenWrt/LEDE
+### Get OpenWrt
 Clone OpenWrt to some place in your home directory (`<wrt dir>`)
 
-    $ git clone https://github.com/openwrt/openwrt.git
+    $ git clone https://git.openwrt.org/openwrt/openwrt.git
 
-...LEDE 
+### Check prerequisites
 
-    $ git clone https://git.lede-project.org/source.git
+```
+make prereq
+```
 
 ### Download and install available feeds 
 
@@ -30,11 +29,11 @@ Within the `<wrt dir>/package` directory create a symbolic link to `<snapos dir>
 
 ```
 $ cd <wrt dir>
-$ ln -s <snapos dir>/openwrt package/snapos
+$ ln -s <snapos dir>/openwrt package/snapcast
 ```
 
 ### Build  
-In `make menuconfig` navigate to `Multimedia/snapcast` and select `snapserver` and/or `snapclient`
+In `make menuconfig` navigate to `Sound/snapcast` and select `Snapserver` and/or `Snapclient`
 
 ```
 $ cd <wrt dir>
@@ -47,8 +46,8 @@ $ make
 If there is an update for snapcast available, it can be rebuilt like this:
 ```
 $ cd <wrt dir>
-$ make package/snapos/snapcast/clean
-$ make package/snapos/snapcast/compile
+$ make package/snapcast/snapcast/clean
+$ make package/snapcast/snapcast/compile
 ```
 
 The packaged `ipk` files are in  
