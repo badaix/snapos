@@ -8,24 +8,24 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME := snapcast
-PKG_VERSION := 0.15.0
+PKG_VERSION := 0.18.1
 PKG_RELEASE := $(PKG_SOURCE_VERSION)
 PKG_USE_MIPS16 := 0
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/badaix/snapcast.git
-PKG_SOURCE_VERSION:=v0.15.0
+PKG_SOURCE_VERSION:=v0.18.1
 PKG_BUILD_DIR:=$(BUILD_DIR)/snapcast-$(PKG_VERSION)
-PKG_BUILD_DEPENDS := asio popl aixlog
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/cmake.mk
 
 define Package/snapcast/Default
-	SECTION := multimedia
-	CATEGORY := Multimedia
-	TITLE := snapcast
-	DEPENDS := +libstdcpp +libavahi-client +libatomic +libogg +libflac
+	SECTION := sound
+	CATEGORY := Sound
+	TITLE := Synchronous multiroom audio player
+	DEPENDS := +libstdcpp +libavahi-client +libatomic +libogg +libflac +libopus +boost
+	URL := https://github.com/badaix/snapcast
 endef
 
 define Package/snapcast/description/Default
@@ -39,21 +39,22 @@ endef
 
 define Package/snapcast/description
 	$(call Package/snapcast/description/Default)
-	Multi-room client-server audio player
-	Include Server and Client
+	Snapcast is a multi-room client-server audio player, 
+	where all clients are time synchronized with the server 
+	to play perfectly synced audio
 endef
 
 define Package/snapserver
 	$(call Package/snapcast/Default)
-	TITLE += snapserver
+	TITLE += Snapserver
 	DEPENDS += +libvorbis
 	HIDDEN := 1
 endef
 
 define Package/snapclient
 	$(call Package/snapcast/Default)
-	TILE += snapclient
-	DEPENDS += +alsa-lib +libvorbisidec
+	TILE += Snapclient
+	DEPENDS += +AUDIO_SUPPORT:alsa-lib +libvorbisidec
 	HIDDEN := 1
 endef
 
@@ -68,17 +69,17 @@ define Package/snapclient/description
 endef
 
 define Package/snapcast/config
- 	menu "Select snapcast Options"
+ 	menu "Select Snapcast Options"
 		depends on PACKAGE_snapcast
 		comment "Choose server or client"
 		config PACKAGE_snapserver
-			prompt "snapserver"
+			prompt "Snapserver"
 			help
 				Snapcast server
 			default n
 
 		config PACKAGE_snapclient
-			prompt "snapclient"
+			prompt "Snapclient"
 			help
 				Snapcast client
 			default n
@@ -92,15 +93,6 @@ define Build/Prepare
 	$(call Build/Prepare/Default)
 	$(INSTALL_DIR) $(STAGING_DIR)/usr/lib/pkgconfig/
 	$(INSTALL_DATA) ./files/vorbisidec.pc $(STAGING_DIR)/usr/lib/pkgconfig/
-
-#	$(CP) -r src/common/ $(PKG_BUILD_DIR)
-#	$(CP) -r src/message/ $(PKG_BUILD_DIR)
-#	$(CP) -r src/externals/ $(PKG_BUILD_DIR)
-#	$(CP) -r src/openWrt/ $(PKG_BUILD_DIR)
-#	$(if $(CONFIG_PACKAGE_snapserver), \
-#		$(CP) -r src/server/ $(PKG_BUILD_DIR),)
-#	$(if $(CONFIG_PACKAGE_snapclient), \
-#		$(CP) -r src/client/ $(PKG_BUILD_DIR),)
 endef
 
 
@@ -114,7 +106,8 @@ define Package/snapserver/install
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/snapserver.init $(1)/etc/init.d/snapserver
 	$(INSTALL_DIR) $(1)/etc/default
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/server/debian/snapserver.default $(1)/etc/default/snapserver
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/debian/snapserver.default $(1)/etc/default/snapserver
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/server/etc/snapserver.conf $(1)/etc/snapserver.conf
 endef
 
 define Package/snapclient/install
@@ -123,7 +116,7 @@ define Package/snapclient/install
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/snapclient.init $(1)/etc/init.d/snapclient
 	$(INSTALL_DIR) $(1)/etc/default
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/client/debian/snapclient.default $(1)/etc/default/snapclient
+	$(INSTALL_BIN) $(PKG_BUILD_DIR)/debian/snapclient.default $(1)/etc/default/snapclient
 endef
 
 $(eval $(call BuildPackage,snapserver))
