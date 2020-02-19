@@ -10,12 +10,6 @@ Clone OpenWrt to some place in your home directory (`<wrt dir>`)
 
     $ git clone https://git.openwrt.org/openwrt/openwrt.git
 
-### Check prerequisites
-
-```
-make prereq
-```
-
 ### Download and install available feeds 
 
 ```
