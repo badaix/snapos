@@ -86,16 +86,6 @@ define Package/snapcast/config
 	endmenu
 endef
 
-
-define Build/Prepare
-	# copy package config file for tremor, 
-	# as this is not done by the original package and snapcast relies on it
-	$(call Build/Prepare/Default)
-	$(INSTALL_DIR) $(STAGING_DIR)/usr/lib/pkgconfig/
-	$(INSTALL_DATA) ./files/vorbisidec.pc $(STAGING_DIR)/usr/lib/pkgconfig/
-endef
-
-
 define Package/snapcast/Default/install
 	true
 endef
