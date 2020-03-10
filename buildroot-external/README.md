@@ -16,10 +16,6 @@ To build out of tree, add `O=/PATH/TO/BUILD/DIR` and continue in this directory
 [*] Snapcast
 [*]   Snapclient
 [ ]   Snapserver
--*- aixlog
--*- jsonrpc++
--*- popl
--*- asio
 ```
  5. Run `make`, wait, and find the image in `image/sdcard.img`
  6. Write the image to an sd card, e.g. (with `sdX` = your sd card's device name):
