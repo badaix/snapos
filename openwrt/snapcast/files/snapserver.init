@@ -2,42 +2,29 @@
 # Author: Johannes Pohl <johannes.pohl@badaix.de>
 START=90
 
-SERVICE_NAME=snapserver
-SERVICE_WRITE_PID=1
-SERVICE_DAEMONIZE=1
-SERVICE_PID_FILE=/var/run/$SERVICE_NAME/pid
+USE_PROCD=1
 
-DESC="Snapcast server"
-DAEMON=/usr/bin/$SERVICE_NAME
+NAME=snapserver
+PROG=/usr/bin/$NAME
+PID_FILE=/var/run/$NAME.pid
+CONFIG_FILE=/etc/default/$NAME
 
 
-# Exit if the package is not installed
-[ -x "$DAEMON" ] || exit 0
-
-# Read configuration variable file if it is present
-[ -r /etc/default/$SERVICE_NAME ] && . /etc/default/$SERVICE_NAME
-SNAPSERVER_OPTS="-d $SNAPSERVER_OPTS"
-
-if [ "$START_SNAPSERVER" != "true" ] ; then
-  exit 0
-fi
-
-#
-# Function that starts the daemon/service
-#
-start()
+start_service()
 {
-	service_start $DAEMON $SNAPSERVER_OPTS
-}
+	local autostart opts
 
-#
-# Function that stops the daemon/service
-#
-stop()
-{
-	service_stop $DAEMON
-	#killall $SERVICE_NAME
-	# Many daemons don't delete their pidfiles when they exit.
-	rm -f $SERVICE_PID_FILE
-}
+	autostart=$(grep ^START_SNAPSERVER $CONFIG_FILE |cut -d= -f2)
+	[ "$autostart" != "true" ] && logger -t $NAME "Not starting due to START_SNAPSERVER" && exit 0
 
+	opts=$(grep ^SNAPSERVER_OPTS $CONFIG_FILE |cut -d "\"" -f2)
+	opts="--logging.sink system $opts"
+
+	procd_open_instance
+	procd_set_param command $PROG
+	procd_append_param command $opts
+	procd_set_param pidfile $PID_FILE
+	procd_set_param stderr 1
+	procd_set_param stdout 1
+	procd_close_instance
+}
