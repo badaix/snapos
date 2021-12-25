@@ -5,10 +5,7 @@ export DEB_LDFLAGS_MAINT_APPEND = -Wl,--as-needed
 include /usr/share/dpkg/buildflags.mk
 
 %:
-	dh $@ --buildsystem=cmake
+	dh $@ --buildsystem=cmake --sourcedirectory=src/snapcast --builddirectory=build
 
 override_dh_auto_configure:
 	dh_auto_configure -- $(CMAKEFLAGS)
-
-#override_dh_auto_build:
-#	dh_auto_build -- STRIP=: DEBUG= ADD_CFLAGS="$(CXXFLAGS) $(CPPFLAGS)" ADD_LDFLAGS="$(LDFLAGS)"
