@@ -1,0 +1,2 @@
+build/
+debian/snap*.debhelper.log
