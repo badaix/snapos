@@ -4,18 +4,32 @@ on: [push, pull_request]
 
 jobs:
   build:
+    strategy:
+      fail-fast: false
+      matrix:
+        image:
+          - "buster"
+          - "bullseye"
 
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
+
+    container:
+      image: debian:${{matrix.image}}
 
     steps:
+    - name: dependencies
+      run: apt-get update && apt-get install -yq wget build-essential cmake git rename libasound2-dev libsoxr-dev libvorbisidec-dev libvorbis-dev libflac-dev libopus-dev alsa-utils libpulse-dev libavahi-client-dev avahi-daemon debhelper ccache libexpat1-dev
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Checkout submodules
-      run: git submodule update --init --recursive
+      with:
+        submodules: recursive
+    - name: test
+      run: |
+        pwd
+        ls -l
+        echo $GITHUB_WORKSPACE
     - name: Get Snapcast sha
-      run: echo "SHA=$(git -C ${{ github.workspace }}/src/snapcast rev-parse HEAD)" >> $GITHUB_ENV
-    - name: dependencies
-      run: sudo apt-get update && sudo apt-get install -yq rename libasound2-dev libsoxr-dev libvorbisidec-dev libvorbis-dev libflac-dev libopus-dev alsa-utils libpulse-dev libavahi-client-dev avahi-daemon debhelper ccache expat
+      run: echo "SHA=$(git -C $GITHUB_WORKSPACE/src/snapcast rev-parse HEAD)" >> $GITHUB_ENV
     - name: cache boost
       id: cache-boost
       uses: actions/cache@v2
@@ -34,12 +48,12 @@ jobs:
         restore-keys: ${{ runner.os }}-ccache-
     - name: debian package
       run: |
-        fakeroot make -f debian/rules CMAKEFLAGS="-DBOOST_ROOT=${{ github.workspace }}/boost_1_78_0 -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DREVISION=${{ env.SHA }} -DCMAKE_CXX_FLAGS=-DJSON_HAS_CPP_14 -DBUILD_WITH_PULSE=OFF" binary
+        fakeroot make -f debian/rules CMAKEFLAGS="-DBOOST_ROOT=$GITHUB_WORKSPACE/boost_1_78_0 -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DREVISION=${{ env.SHA }} -DCMAKE_CXX_FLAGS=-DJSON_HAS_CPP_14 -DBUILD_WITH_PULSE=OFF" binary
         rename 's/_amd64/_without-pulse_amd64/g' ../snapclient*_amd64.deb
         fakeroot make -f debian/rules clean
-        fakeroot make -f debian/rules CMAKEFLAGS="-DBOOST_ROOT=${{ github.workspace }}/boost_1_78_0 -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DREVISION=${{ env.SHA }} -DCMAKE_CXX_FLAGS=-DJSON_HAS_CPP_14" binary
+        fakeroot make -f debian/rules CMAKEFLAGS="-DBOOST_ROOT=$GITHUB_WORKSPACE/boost_1_78_0 -DCMAKE_BUILD_TYPE:STRING=Release -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DREVISION=${{ env.SHA }} -DCMAKE_CXX_FLAGS=-DJSON_HAS_CPP_14" binary
     - name: Archive artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: develop_snapshot_amd64-${{env.SHA}}
-        path: /home/runner/work/snapos/snap*_amd64.deb
+        name: snapcast_amd64-debian-${{matrix.image}}-${{env.SHA}}
+        path: /__w/snapos/snap*_amd64.deb
