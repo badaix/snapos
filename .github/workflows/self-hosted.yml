@@ -19,6 +19,8 @@ jobs:
     steps:
     - name: clean-up
       run: rm -rf /home/pi/actions-runner/_work/snapcast/snap*_armhf.deb
+    - name: dependencies
+      run: apt-get update && apt-get install -yq wget debhelper build-essential cmake git rename libasound2-dev libsoxr-dev libvorbisidec-dev libvorbis-dev libflac-dev libopus-dev alsa-utils libpulse-dev libavahi-client-dev avahi-daemon libexpat1-dev
     - name: Checkout
       uses: actions/checkout@v2
       with:
