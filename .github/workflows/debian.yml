@@ -8,11 +8,24 @@ jobs:
       fail-fast: false
       matrix:
         image:
-          - "buster"
-          - "bullseye"
-          - "bookworm"
+          - buster
+          - bullseye
+          - bookworm
+        os: 
+          - ubuntu-latest
+          - self-hosted-rpi4
+        exclude:
+          - os: self-hosted-rpi4
+            image: bullseye
+          - os: self-hosted-rpi4
+            image: bookworm
+        include:
+          - os: ubuntu-latest
+            arch: "amd64"
+          - os: self-hosted-rpi4
+            arch: "armhf"
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
 
     container:
       image: debian:${{matrix.image}}
@@ -24,8 +37,12 @@ jobs:
       uses: actions/checkout@v2
       with:
         submodules: recursive
-    - name: Get Snapcast sha
-      run: echo "SHA=$(git -C $GITHUB_WORKSPACE/src/snapcast rev-parse HEAD)" >> $GITHUB_ENV
+    - name: environment
+      run: |
+        echo "SHA=$(git -C $GITHUB_WORKSPACE/src/snapcast rev-parse HEAD)" >> $GITHUB_ENV
+        echo "PARENT_DIR=$(dirname $GITHUB_WORKSPACE)" >> $GITHUB_ENV
+    - name: cleanup old packages
+      run: rm -rf ${{ env.PARENT_DIR }}/snap*.deb
     - name: cache boost
       id: cache-boost
       uses: actions/cache@v2
@@ -38,11 +55,11 @@ jobs:
     - name: debian package
       run: |
         fakeroot make -f debian/rules CMAKEFLAGS="-DBOOST_ROOT=$GITHUB_WORKSPACE/boost_1_78_0 -DCMAKE_BUILD_TYPE:STRING=Release -DREVISION=${{ env.SHA }} -DCMAKE_CXX_FLAGS=-DJSON_HAS_CPP_14 -DBUILD_WITH_PULSE=OFF" binary
-        rename 's/_amd64/_without-pulse_amd64/g' ../snapclient*_amd64.deb
+        rename 's/_${{ matrix.arch }}/_without-pulse_${{ matrix.arch }}/g' ../snapclient*_${{ matrix.arch }}.deb
         fakeroot make -f debian/rules clean
         fakeroot make -f debian/rules CMAKEFLAGS="-DBOOST_ROOT=$GITHUB_WORKSPACE/boost_1_78_0 -DCMAKE_BUILD_TYPE:STRING=Release -DREVISION=${{ env.SHA }} -DCMAKE_CXX_FLAGS=-DJSON_HAS_CPP_14" binary
     - name: Archive artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: snapcast_amd64-debian-${{matrix.image}}-${{env.SHA}}
-        path: /__w/snapos/snap*_amd64.deb
+        name: snapcast_${{ matrix.arch }}-debian-${{matrix.image}}-${{env.SHA}}
+        path: ${{env.PARENT_DIR}}/snap*_${{ matrix.arch }}.deb
