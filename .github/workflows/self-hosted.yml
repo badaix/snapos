@@ -1,4 +1,4 @@
-name: debian-armhf
+name: Raspbian-armhf
 
 on: [push, pull_request]
 
@@ -6,20 +6,18 @@ jobs:
   deb:
     strategy:
       fail-fast: false
+      max-parallel: 1
       matrix:
         image:
           - "buster"
           - "bullseye"
           - "bookworm"
 
-    runs-on: ubuntu-latest
-
-    container:
-      image: debian:${{matrix.image}}
+    runs-on: self-hosted-rpi4
 
     steps:
-    - name: dependencies
-      run: apt-get update && apt-get install -yq wget debhelper build-essential cmake git rename libasound2-dev libsoxr-dev libvorbisidec-dev libvorbis-dev libflac-dev libopus-dev alsa-utils libpulse-dev libavahi-client-dev avahi-daemon libexpat1-dev
+    - name: clean-up
+      run: rm -rf /home/pi/actions-runner/_work/snapcast/snap*_armhf.deb
     - name: Checkout
       uses: actions/checkout@v2
       with:
@@ -38,11 +36,11 @@ jobs:
     - name: debian package
       run: |
         fakeroot make -f debian/rules CMAKEFLAGS="-DBOOST_ROOT=$GITHUB_WORKSPACE/boost_1_78_0 -DCMAKE_BUILD_TYPE:STRING=Release -DREVISION=${{ env.SHA }} -DCMAKE_CXX_FLAGS=-DJSON_HAS_CPP_14 -DBUILD_WITH_PULSE=OFF" binary
-        rename 's/_armhf/_without-pulse_armhf/g' ../snapclient*_armhf.deb
+        rename 's/_amd64/_without-pulse_amd64/g' ../snapclient*_amd64.deb
         fakeroot make -f debian/rules clean
         fakeroot make -f debian/rules CMAKEFLAGS="-DBOOST_ROOT=$GITHUB_WORKSPACE/boost_1_78_0 -DCMAKE_BUILD_TYPE:STRING=Release -DREVISION=${{ env.SHA }} -DCMAKE_CXX_FLAGS=-DJSON_HAS_CPP_14" binary
     - name: Archive artifacts
       uses: actions/upload-artifact@v2
       with:
-        name: snapcast_armhf-debian-${{matrix.image}}-${{env.SHA}}
-        path: /__w/snapos/snap*_armhf.deb
+        name: snapcast_amd64-debian-${{matrix.image}}-${{env.SHA}}
+        path: /__w/snapos/snap*_amd64.deb
