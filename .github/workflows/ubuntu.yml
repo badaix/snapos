@@ -1,15 +1,16 @@
-name: Ubuntu-amd64
+name: debian-amd64
 
 on: [push, pull_request]
 
 jobs:
-  build:
+  deb:
     strategy:
       fail-fast: false
       matrix:
         image:
           - "buster"
           - "bullseye"
+          - "bookworm"
 
     runs-on: ubuntu-latest
 
