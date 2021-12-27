@@ -32,7 +32,7 @@ jobs:
 
     steps:
     - name: dependencies
-      run: apt-get update && apt-get install -yq wget debhelper build-essential cmake git rename libasound2-dev libsoxr-dev libvorbisidec-dev libvorbis-dev libflac-dev libopus-dev alsa-utils libpulse-dev libavahi-client-dev avahi-daemon libexpat1-dev
+      run: apt-get update && apt-get install -yq wget debhelper build-essential cmake git rename libatomic1 libasound2-dev libsoxr-dev libvorbisidec-dev libvorbis-dev libflac-dev libopus-dev alsa-utils libpulse-dev libavahi-client-dev avahi-daemon libexpat1-dev
     - name: Checkout
       uses: actions/checkout@v2
       with:
