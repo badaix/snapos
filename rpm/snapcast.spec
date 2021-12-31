@@ -1,11 +1,10 @@
 Name:           snapcast 
-Version:        0.26.0 
-Release:        3 
+Release:        1
 License:        GPL-3.0 
 Group:          Productivity/Multimedia/Sound/Players
 Summary:        Snapcast is a multi-room time-synced client-server audio player
 Url:            https://github.com/badaix/snapcast 
-Source0:        snapcast-%{version}.tar.gz 
+Source0:        snapcast.tar.gz 
 Source1:        snapserver.service
 Source2:        snapserver.default
 Source3:        snapclient.service
@@ -27,6 +26,9 @@ BuildRequires:  systemd
 BuildRequires:  systemd-rpm-macros
 #%endif
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
+%{!?_reversion: %define _reversion "" }
+%{!?_version:   %define _version "0.0.0" }
+Version:        %{_version}
 
 %description 
 Snapcast is a multi-room client-server audio player, where all clients are time synchronized with the server to play perfectly synced audio. It is not a standalone player, but an extension that turns your existing audio player into a Sonos-like multi-room solution. The server's audio input is a named pipe /tmp/snapfifo. All data that is fed into this file will be send to the connected clients. One of the most generic ways to use Snapcast is in conjunction with the music player daemon (MPD) or Mopidy, which can be configured to use a named pipe as audio output.
@@ -56,10 +58,10 @@ a Sonos-like multi-room solution.
 This package contains the client which connects to the server and plays the audio.
 
 %prep 
-%setup -q -n %{name}-%{version}
+%setup -q -n %{name}
 
 %build 
-%cmake -DWERROR=ON -DBUILD_TESTS=OFF -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
+%cmake -DWERROR=ON -DBUILD_TESTS=OFF -DREVISION=%{_reversion}
 %cmake_build --parallel 2
 
 %install

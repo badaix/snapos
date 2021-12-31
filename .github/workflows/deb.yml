@@ -1,9 +1,10 @@
-name: debian-amd64
+name: deb
 
 on: [push, pull_request]
 
 jobs:
   deb:
+
     strategy:
       fail-fast: false
       matrix:
@@ -14,11 +15,6 @@ jobs:
         os: 
           - ubuntu-latest
           - self-hosted-rpi4
-        exclude:
-          - os: self-hosted-rpi4
-            image: bullseye
-          - os: self-hosted-rpi4
-            image: bookworm
         include:
           - os: ubuntu-latest
             arch: "amd64"

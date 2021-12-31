@@ -1,0 +1,54 @@
+name: rpm
+
+on: [push, pull_request]
+
+jobs:
+  rpm:
+
+    env:
+      VERSION: 0.26.0 
+
+    strategy:
+      fail-fast: false
+      matrix:
+        image:
+          - 34
+          - 35
+        os:
+          - ubuntu-latest
+          - self-hosted-rpi4
+        include:
+          - os: ubuntu-latest
+            arch: "x86_64"
+          - os: self-hosted-rpi4
+            arch: "armv7hl"
+
+    runs-on: ${{ matrix.os }}
+
+    container:
+      image: fedora:${{matrix.image}}
+
+    steps:
+    - name: dependencies
+      run: dnf -y update && dnf -y install wget git rpm-build gcc-c++ cmake boost-devel alsa-lib-devel avahi-devel libatomic libvorbis-devel opus-devel pulseaudio-libs-devel flac-devel soxr-devel libstdc++-static expat-devel
+    - name: Checkout
+      uses: actions/checkout@v2
+      with:
+        submodules: recursive
+    - name: environment
+      run: |
+        echo "SHA=$(git -C $GITHUB_WORKSPACE/src/snapcast rev-parse HEAD)" >> $GITHUB_ENV
+        echo "PARENT_DIR=$(dirname $GITHUB_WORKSPACE)" >> $GITHUB_ENV
+    - name: cleanup old packages
+      run: rm -rf ~/rpmbuild/RPMS/*
+    - name: rpm package
+      run: |
+        mkdir -p ~/rpmbuild/{BUILD,BUILDROOT,RPMS,SOURCES,SPECS,SRPMS}
+        cp rpm/* ~/rpmbuild/SOURCES/
+        tar -C $GITHUB_WORKSPACE/src/ -czvf ~/rpmbuild/SOURCES/snapcast.tar.gz snapcast
+        rpmbuild --nodebuginfo --define '_reversion ${{ env.SHA }}' --define '_version ${{ env.VERSION }}' -bb ~/rpmbuild/SOURCES/snapcast.spec
+    - name: Archive artifacts
+      uses: actions/upload-artifact@v2
+      with:
+        name: snapcast_${{ matrix.arch }}-fedora-${{matrix.image}}-${{env.SHA}}
+        path: ~/rpmbuild/RPMS/${{ matrix.arch }}/snap*.rpm
