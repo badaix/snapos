@@ -43,6 +43,8 @@ jobs:
       run: |
         echo "SHA=$(git -C $GITHUB_WORKSPACE/src/snapcast rev-parse HEAD)" >> $GITHUB_ENV
         echo "PARENT_DIR=$(dirname $GITHUB_WORKSPACE)" >> $GITHUB_ENV
+    - name: Clean up
+      run: rm -rf ${{env.PARENT_DIR}}/snap*_${{ matrix.arch }}.deb
     - name: Cache boost
       id: cache-boost
       uses: actions/cache@v2
