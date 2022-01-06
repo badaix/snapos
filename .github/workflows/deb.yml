@@ -17,11 +17,11 @@ jobs:
           - bookworm
         os: 
           - ubuntu-latest
-          - self-hosted-rpi4
+          - self-hosted-rpi3
         include:
           - os: ubuntu-latest
             arch: "amd64"
-          - os: self-hosted-rpi4
+          - os: self-hosted-rpi3
             arch: "armhf"
 
     runs-on: ${{ matrix.os }}
