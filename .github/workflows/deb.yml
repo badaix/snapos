@@ -6,29 +6,33 @@ jobs:
   deb:
 
     env:
-      VERSION: 0.26.0 
+      VERSION: '0.26.0'
 
     strategy:
       fail-fast: false
       matrix:
         image:
           - buster
-          # - bullseye
-          # - bookworm
+          - bullseye
+          - bookworm
         os: 
           - ubuntu-latest
           - self-hosted-rpi4
         include:
           - os: ubuntu-latest
             arch: "amd64"
+            image_prefix: "debian:"
           - os: self-hosted-rpi4
-            arch: "armv6"
+            arch: "armhf"
+            image_prefix: "navikey/raspbian-"
+        exclude:
+          - os: self-hosted-rpi4
+            image: "bookworm"
 
     runs-on: ${{ matrix.os }}
 
     container:
-      image: debian:${{matrix.image}}
-
+      image: ${{matrix.image_prefix}}${{matrix.image}}
     steps:
     - name: Get dependencies
       run: apt-get update && apt-get install -yq wget debhelper build-essential cmake git rename libatomic1 libasound2-dev libsoxr-dev libvorbisidec-dev libvorbis-dev libflac-dev libopus-dev alsa-utils libpulse-dev libavahi-client-dev avahi-daemon libexpat1-dev
@@ -37,7 +41,7 @@ jobs:
       with:
         submodules: recursive
     - name: Checkout tag
-      if: ${{ env.VERSION != '0.0.0' }}
+      if: ${{ env.VERSION != '' }}
       run: git -C $GITHUB_WORKSPACE/src/snapcast/ checkout v${{ env.VERSION }}
     - name: Setup environment
       run: |

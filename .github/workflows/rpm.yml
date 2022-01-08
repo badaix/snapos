@@ -16,11 +16,11 @@ jobs:
           - 35
         os:
           - ubuntu-latest
-          - self-hosted-rpi3
+          - self-hosted-rpi4
         include:
           - os: ubuntu-latest
             arch: "x86_64"
-          - os: self-hosted-rpi3
+          - os: self-hosted-rpi4
             arch: "armv7hl"
 
     runs-on: ${{ matrix.os }}
