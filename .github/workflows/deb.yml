@@ -56,10 +56,10 @@ jobs:
       run: wget https://boostorg.jfrog.io/artifactory/main/release/1.78.0/source/boost_1_78_0.tar.bz2 && tar xjf boost_1_78_0.tar.bz2
     - name: Create deb package
       run: |
-        fakeroot make -f debian/rules CMAKEFLAGS="-DBOOST_ROOT=$GITHUB_WORKSPACE/boost_1_78_0 -DCMAKE_BUILD_TYPE:STRING=Release -DREVISION=${{ env.SHA }} -DCMAKE_CXX_FLAGS=-DJSON_HAS_CPP_14 -DBUILD_WITH_PULSE=OFF -march=${{ matrix.arch }}" binary
+        fakeroot make -f debian/rules CMAKEFLAGS="-DBOOST_ROOT=$GITHUB_WORKSPACE/boost_1_78_0 -DCMAKE_BUILD_TYPE:STRING=Release -DREVISION=${{ env.SHA }} -DBUILD_WITH_PULSE=OFF" binary
         rename 's/_${{ matrix.arch }}/_without-pulse_${{ matrix.arch }}/g' ../snapclient*_${{ matrix.arch }}.deb
         fakeroot make -f debian/rules clean
-        fakeroot make -f debian/rules CMAKEFLAGS="-DBOOST_ROOT=$GITHUB_WORKSPACE/boost_1_78_0 -DCMAKE_BUILD_TYPE:STRING=Release -DREVISION=${{ env.SHA }} -DCMAKE_CXX_FLAGS=-DJSON_HAS_CPP_14 -march=${{ matrix.arch }}" binary
+        fakeroot make -f debian/rules CMAKEFLAGS="-DBOOST_ROOT=$GITHUB_WORKSPACE/boost_1_78_0 -DCMAKE_BUILD_TYPE:STRING=Release -DREVISION=${{ env.SHA }}" binary
     - name: Archive artifacts
       uses: actions/upload-artifact@v2
       with:
