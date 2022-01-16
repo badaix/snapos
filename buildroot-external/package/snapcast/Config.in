@@ -11,8 +11,9 @@ config BR2_PACKAGE_SNAPCAST
 	select BR2_PACKAGE_FLAC
 	select BR2_PACKAGE_LIBVORBIS
 	select BR2_PACKAGE_OPUS
+	select BR2_PACKAGE_LIBSOXR
 	help
-	  Synchronous multi-room audio player
+	  Synchronous multiroom audio player
 	  
 	  https://github.com/badaix/snapcast
 
