@@ -13,7 +13,7 @@ do
 
 auto wlan0
 iface wlan0 inet dhcp
-        pre-up wpa_supplicant -B -Dwext -iwlan0 -c/etc/wpa_supplicant.conf
+        pre-up wpa_supplicant -B -iwlan0 -c/etc/wpa_supplicant.conf
         post-down killall -q wpa_supplicant
         wait-delay 15
 __EOF__

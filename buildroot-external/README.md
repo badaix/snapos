@@ -28,7 +28,6 @@ To build out of tree, add `O=/PATH/TO/BUILD/DIR` and continue in this directory
 ### WiFi
 To enable WiFi, add your WiFi's SSID and password to `/etc/wpa_supplicant.conf`:
 ```
-ctrl_interface=/var/run/wpa_supplicant
 ap_scan=1
 
 network={
