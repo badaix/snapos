@@ -24,7 +24,7 @@ define Package/snapcast/Default
 	SECTION := sound
 	CATEGORY := Sound
 	TITLE := Synchronous multiroom audio player
-	DEPENDS := +libstdcpp +libavahi-client +libatomic +libogg +libflac +libopus +boost
+	DEPENDS := +libstdcpp +libavahi-client +libatomic +libogg +libflac +libopus +boost 
 	URL := https://github.com/badaix/snapcast
 endef
 
@@ -47,7 +47,7 @@ endef
 define Package/snapserver
 	$(call Package/snapcast/Default)
 	TITLE += Snapserver
-	DEPENDS += +libvorbis
+	DEPENDS += +AUDIO_SUPPORT:alsa-lib +libvorbis +libsoxr
 	HIDDEN := 1
 endef
 
