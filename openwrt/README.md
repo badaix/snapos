@@ -5,17 +5,24 @@ https://openwrt.org/docs/guide-developer/build-system/install-buildsystem
 ## OpenWrt build system setup
 https://openwrt.org/docs/guide-developer/build-system/install-buildsystem
 
-### Get OpenWrt
+### Get OpenWrt and SnapOS
 Clone OpenWrt to some place in your home directory (`<wrt dir>`)
 
     $ git clone https://git.openwrt.org/openwrt/openwrt.git
-    cd openwrt
-git pull
- 
+    $ git clone https://github.com/badaix/snapos.git
+        
 # Select a specific code revision
-    git branch -a
-    git tag
+    cd openwrt
+    git pull
     git checkout v21.02.2
+
+### Add snapcast
+Within the `<wrt dir>/package` directory create a symbolic link to `<snapos dir>/openwrt`: 
+
+```
+$ cd packages
+$ ln -s ../../snapos/openwrt ./snapcast
+```
 
 ### Download and install available feeds 
 
@@ -25,16 +32,8 @@ $ ./scripts/feeds update -a
 $ ./scripts/feeds install -a
 ```
 
-### Add snapcast
-Within the `<wrt dir>/package` directory create a symbolic link to `<snapos dir>/openwrt`: 
-
-```
-$ cd <wrt dir>
-$ ln -s <snapos dir>/openwrt package/snapcast
-```
-
 ### Build  
-In `make menuconfig` navigate to `Sound/snapcast` and select `Snapserver` and/or `Snapclient`
+In `make menuconfig` select your `Target System`, `Subtarget`, `Target Profile` and navigate to `Sound/snapcast` and select `Snapserver` and/or `Snapclient`
 
 ```
 $ cd <wrt dir>
