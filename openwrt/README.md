@@ -40,7 +40,7 @@ In `make menuconfig` navigate to `Sound/snapcast` and select `Snapserver` and/or
 $ cd <wrt dir>
 $ make defconfig
 $ make menuconfig
-$ make
+$ make -j $(nproc)
 ```
 
 #### Rebuild Snapcast:
