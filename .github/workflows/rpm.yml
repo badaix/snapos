@@ -6,7 +6,7 @@ jobs:
   rpm:
 
     env:
-      VERSION: 0.26.0 
+      VERSION: v0.26.0 
 
     strategy:
       fail-fast: false
@@ -33,11 +33,12 @@ jobs:
       run: dnf -y update && dnf -y install wget git rpm-build gcc-c++ cmake boost-devel alsa-lib-devel avahi-devel libatomic libvorbis-devel opus-devel pulseaudio-libs-devel flac-devel soxr-devel libstdc++-static expat-devel
     - name: Checkout
       uses: actions/checkout@v2
+    - name: Checkout Snapcast
+      uses: actions/checkout@v2
       with:
-        submodules: recursive
-    - name: Checkout tag
-      if: ${{ env.VERSION != '0.0.0' }}
-      run: git -C $GITHUB_WORKSPACE/src/snapcast/ checkout v${{ env.VERSION }}
+        repository: badaix/snapcast
+        path: src/snapcast
+        ref: ${{ env.VERSION }}
     - name: Setup environment
       run: |
         echo "SHA=$(git -C $GITHUB_WORKSPACE/src/snapcast rev-parse HEAD)" >> $GITHUB_ENV

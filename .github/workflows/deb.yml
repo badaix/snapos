@@ -9,7 +9,7 @@ jobs:
   deb:
 
     env:
-      VERSION: 0.26.0
+      VERSION: v0.26.0
 
     strategy:
       fail-fast: false
@@ -45,11 +45,12 @@ jobs:
         DEBIAN_FRONTEND: noninteractive
     - name: Checkout
       uses: actions/checkout@v2
+    - name: Checkout Snapcast
+      uses: actions/checkout@v2
       with:
-        submodules: recursive
-    - name: Checkout tag
-      if: ${{ env.VERSION != '' }}
-      run: git -C $GITHUB_WORKSPACE/src/snapcast/ checkout v${{ env.VERSION }}
+        repository: badaix/snapcast
+        path: src/snapcast
+        ref: ${{ env.VERSION }}
     - name: Setup environment
       run: |
         echo "SHA=$(git -C $GITHUB_WORKSPACE/src/snapcast rev-parse HEAD)" >> $GITHUB_ENV
