@@ -9,7 +9,7 @@ jobs:
   deb:
 
     env:
-      VERSION: v0.26.0
+      VERSION: develop
 
     strategy:
       fail-fast: false
