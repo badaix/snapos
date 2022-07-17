@@ -25,13 +25,10 @@ if __name__ == "__main__":
         print(f"Usage: changelog_md2deb.py <changelog.md file>")
         sys.exit(1)
 
-    for i, arg in enumerate(sys.argv):
-        print(f"Argument {i:>6}: {arg}")
-
     with open(sys.argv[1], 'r') as file:
         data = file.read()
-        #.replace('\n', '')
 
+    data = re.sub('^\s*# Snapcast changelog *\n*', '', data, flags=re.MULTILINE)
     data = re.sub('^\s*### ([a-zA-Z]+) *\n', r'\n  * \1\n', data, flags=re.MULTILINE)
     data = re.sub('^\s*## Version\s+(\S*) *\n', r'snapcast (\1-1) unstable; urgency=medium\n', data, flags=re.MULTILINE)
     data = re.sub('^\s*-\s*(.*) *\n', r'    -\1\n', data, flags=re.MULTILINE)
