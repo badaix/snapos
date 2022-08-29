@@ -24,6 +24,7 @@ start_service()
 	procd_set_param command $PROG
 	procd_append_param command $opts
 	procd_set_param pidfile $PID_FILE
+	procd_set_param respawn # use the defaults for respawing crashed process
 	procd_set_param stderr 1
 	procd_set_param stdout 1
 	procd_close_instance
