@@ -64,6 +64,7 @@ jobs:
         cat $GITHUB_WORKSPACE/debian/changelog
     - name: Setup environment
       run: |
+        echo "ref: ${{ github.event.client_payload.ref }}, sha: ${{ github.event.client_payload.sha }}"
         echo "SHA=$(git -C $GITHUB_WORKSPACE/src/snapcast rev-parse HEAD)" >> $GITHUB_ENV
         echo "PARENT_DIR=$(dirname $GITHUB_WORKSPACE)" >> $GITHUB_ENV
     - name: Clean up
