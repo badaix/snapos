@@ -32,11 +32,11 @@ jobs:
     - name: Get dependenciesenv
       if: steps.cache-dependencies.outputs.cache-hit != 'true'
       run: vcpkg.exe install libflac libvorbis soxr opus boost-asio --triplet x64-windows
-    - name: cmake build
+    - name: configure
       run: |
         echo vcpkg installation root: $env:VCPKG_INSTALLATION_ROOT
         cmake -S src\snapcast -B build -G "Visual Studio 16 2019" -DCMAKE_TOOLCHAIN_FILE="$env:VCPKG_INSTALLATION_ROOT/scripts/buildsystems/vcpkg.cmake" -DVCPKG_TARGET_TRIPLET="x64-windows" -DCMAKE_BUILD_TYPE="Release" -DREVISION="${{ env.SHA }}" -DWERROR=ON -DBUILD_TESTS=ON
-    - name: cmake make
+    - name: build
       run: cmake --build build --config Release --parallel 3 --verbose
     - name: installer
       run: |

@@ -52,7 +52,7 @@ jobs:
         restore-keys: ${{ runner.os }}-ccache-
     #- name: ccache dump config
     #  run: ccache -p
-    - name: cmake build
+    - name: configure
       run: cmake -S $GITHUB_WORKSPACE/src/snapcast -B build -DBOOST_ROOT=$GITHUB_WORKSPACE/boost_${BOOST_VERSION} -DCMAKE_BUILD_TYPE=Release -DREVISION=${{ env.SHA }} -DWERROR=ON -DBUILD_TESTS=ON -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_FLAGS="-I/usr/local/include -Wno-deprecated-declarations"
-    - name: cmake make
+    - name: build
       run: cmake --build build --parallel 3
