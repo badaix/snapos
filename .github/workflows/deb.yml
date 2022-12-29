@@ -78,6 +78,7 @@ jobs:
     - name: Get boost
       if: steps.cache-boost.outputs.cache-hit != 'true'
       run: |
+        echo "https://boostorg.jfrog.io/artifactory/main/release/${BOOST_VERSION//_/.}/source/boost_${BOOST_VERSION}.tar.bz2"
         wget https://boostorg.jfrog.io/artifactory/main/release/${BOOST_VERSION//_/.}/source/boost_${BOOST_VERSION}.tar.bz2
         tar xjf boost_${BOOST_VERSION}.tar.bz2
     - name: Create deb package
