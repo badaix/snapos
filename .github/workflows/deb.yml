@@ -1,6 +1,13 @@
 name: deb
 
-on: [push, pull_request]
+on: 
+  repository_dispatch:
+    types: build-success
+  push:
+    branches:
+    - develop
+    - master
+  pull_request:
 
 env:
   BOOST_VERSION: 1_79_0
