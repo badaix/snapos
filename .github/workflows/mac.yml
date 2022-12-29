@@ -3,7 +3,7 @@ name: mac
 on: [push, pull_request]
 
 env:
-  BOOST_VERSION: 1_79_0
+  BOOST_VERSION: 1_81_0
 
 jobs:
   mac:
