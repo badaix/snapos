@@ -78,15 +78,15 @@ jobs:
     - name: Get boost
       if: steps.cache-boost.outputs.cache-hit != 'true'
       run: |
-        echo "https://boostorg.jfrog.io/artifactory/main/release/${BOOST_VERSION//_/.}/source/boost_${BOOST_VERSION}.tar.bz2"
-        wget https://boostorg.jfrog.io/artifactory/main/release/${BOOST_VERSION//_/.}/source/boost_${BOOST_VERSION}.tar.bz2
-        tar xjf boost_${BOOST_VERSION}.tar.bz2
+        echo "https://boostorg.jfrog.io/artifactory/main/release/${{ env.BOOST_VERSION//_/. }}/source/boost_${{ env.BOOST_VERSION }}.tar.bz2"
+        wget https://boostorg.jfrog.io/artifactory/main/release/${BOOST_VERSION//_/.}/source/boost_${{ env.BOOST_VERSION }}.tar.bz2
+        tar xjf boost_${{ env.BOOST_VERSION }}.tar.bz2
     - name: Create deb package
       run: |
-        fakeroot make -f debian/rules CMAKEFLAGS="-DBOOST_ROOT=$GITHUB_WORKSPACE/boost_${BOOST_VERSION} -DCMAKE_BUILD_TYPE:STRING=Release -DREVISION=${{ env.SHA }} -DBUILD_WITH_PULSE=OFF" binary
+        fakeroot make -f debian/rules CMAKEFLAGS="-DBOOST_ROOT=$GITHUB_WORKSPACE/boost_${{ env.BOOST_VERSION }} -DCMAKE_BUILD_TYPE:STRING=Release -DREVISION=${{ env.SHA }} -DBUILD_WITH_PULSE=OFF" binary
         rename 's/_${{ matrix.arch }}/_without-pulse_${{ matrix.arch }}/g' ../snapclient*_${{ matrix.arch }}.deb
         fakeroot make -f debian/rules clean
-        fakeroot make -f debian/rules CMAKEFLAGS="-DBOOST_ROOT=$GITHUB_WORKSPACE/boost_${BOOST_VERSION} -DCMAKE_BUILD_TYPE:STRING=Release -DREVISION=${{ env.SHA }}" binary
+        fakeroot make -f debian/rules CMAKEFLAGS="-DBOOST_ROOT=$GITHUB_WORKSPACE/boost_${{ env.BOOST_VERSION }} -DCMAKE_BUILD_TYPE:STRING=Release -DREVISION=${{ env.SHA }}" binary
     - name: Archive artifacts
       uses: actions/upload-artifact@v2
       with:
