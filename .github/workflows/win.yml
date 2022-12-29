@@ -6,7 +6,7 @@ jobs:
   win:
 
     env:
-      VERSION: v0.26.0
+      VERSION: develop
 
     runs-on: windows-2019
 
