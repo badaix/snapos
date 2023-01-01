@@ -51,9 +51,9 @@ jobs:
       env:
         DEBIAN_FRONTEND: noninteractive
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Checkout Snapcast
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         repository: badaix/snapcast
         path: src/snapcast
@@ -69,8 +69,6 @@ jobs:
         BOOST_DOT_VERSION=$(echo ${BOOST_VERSION} | sed 's/_/./g')
         echo "BOOST_DOT_VERSION=$BOOST_DOT_VERSION" >> $GITHUB_ENV
         echo "BOOST=boost_${BOOST_VERSION}" >> $GITHUB_ENV
-        echo "BOOST_DOT_VERSION: ${{env.BOOST_DOT_VERSION}}"
-        echo "BOOST: ${{env.BOOST}}"
     - name: Clean up
       run: rm -rf ${{env.PARENT_DIR}}/snap*_${{ matrix.arch }}.deb
     - name: Cache boost

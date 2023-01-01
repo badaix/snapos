@@ -20,9 +20,9 @@ jobs:
 
     steps:
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Checkout Snapcast
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         repository: badaix/snapcast
         path: src/snapcast
@@ -30,19 +30,22 @@ jobs:
     - name: Setup environment
       run: |
         echo "SHA=$(git -C $GITHUB_WORKSPACE/src/snapcast rev-parse HEAD)" >> $GITHUB_ENV
+        BOOST_DOT_VERSION=$(echo ${BOOST_VERSION} | sed 's/_/./g')
+        echo "BOOST_DOT_VERSION=$BOOST_DOT_VERSION" >> $GITHUB_ENV
+        echo "BOOST=boost_${BOOST_VERSION}" >> $GITHUB_ENV
     - name: Get dependencies
       run: brew install pkgconfig libsoxr ccache expat
     - name: Cache boost
       id: cache-boost
       uses: actions/cache@v2
       with:
-        path: boost_${{ env.BOOST_VERSION }}
+        path: ${{env.BOOST}}
         key: ${{ runner.os }}-boost
     - name: Get boost
       if: steps.cache-boost.outputs.cache-hit != 'true'
       run: |
-        wget https://boostorg.jfrog.io/artifactory/main/release/${BOOST_VERSION//_/.}/source/boost_${BOOST_VERSION}.tar.bz2
-        tar xjf boost_${BOOST_VERSION}.tar.bz2
+        wget https://boostorg.jfrog.io/artifactory/main/release/${{env.BOOST_DOT_VERSION}}/source/${{env.BOOST}}.tar.bz2
+        tar xjf ${{env.BOOST}}.tar.bz2
     - name: Cache ccache
       id: cache-ccache
       uses: actions/cache@v2
@@ -53,6 +56,6 @@ jobs:
     #- name: ccache dump config
     #  run: ccache -p
     - name: configure
-      run: cmake -S $GITHUB_WORKSPACE/src/snapcast -B build -DBOOST_ROOT=$GITHUB_WORKSPACE/boost_${BOOST_VERSION} -DCMAKE_BUILD_TYPE=Release -DREVISION=${{ env.SHA }} -DWERROR=ON -DBUILD_TESTS=ON -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_FLAGS="-I/usr/local/include -Wno-deprecated-declarations"
+      run: cmake -S $GITHUB_WORKSPACE/src/snapcast -B build -DBOOST_ROOT=$GITHUB_WORKSPACE/${{env.BOOST}} -DCMAKE_BUILD_TYPE=Release -DREVISION=${{ env.SHA }} -DWERROR=ON -DBUILD_TESTS=ON -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_CXX_FLAGS="-I/usr/local/include -Wno-deprecated-declarations"
     - name: build
       run: cmake --build build --parallel 3

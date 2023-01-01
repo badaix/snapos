@@ -32,9 +32,9 @@ jobs:
     - name: Get dependencies
       run: dnf -y update && dnf -y install wget git rpm-build gcc-c++ cmake boost-devel alsa-lib-devel avahi-devel libatomic libvorbis-devel opus-devel pulseaudio-libs-devel flac-devel soxr-devel libstdc++-static expat-devel
     - name: Checkout
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
     - name: Checkout Snapcast
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
       with:
         repository: badaix/snapcast
         path: src/snapcast
