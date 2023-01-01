@@ -73,7 +73,7 @@ jobs:
       run: rm -rf ${{env.PARENT_DIR}}/snap*_${{ matrix.arch }}.deb
     - name: Cache boost
       id: cache-boost
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: ${{env.BOOST}}
         key: ${{ runner.os }}-boost

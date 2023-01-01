@@ -37,7 +37,7 @@ jobs:
       run: brew install pkgconfig libsoxr ccache expat
     - name: Cache boost
       id: cache-boost
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: ${{env.BOOST}}
         key: ${{ runner.os }}-boost
@@ -48,7 +48,7 @@ jobs:
         tar xjf ${{env.BOOST}}.tar.bz2
     - name: Cache ccache
       id: cache-ccache
-      uses: actions/cache@v2
+      uses: actions/cache@v3
       with:
         path: /Users/runner/.ccache
         key: ${{ runner.os }}-ccache-${{ env.SHA }}
