@@ -66,25 +66,29 @@ jobs:
       run: |
         echo "SHA=$(git -C $GITHUB_WORKSPACE/src/snapcast rev-parse HEAD)" >> $GITHUB_ENV
         echo "PARENT_DIR=$(dirname $GITHUB_WORKSPACE)" >> $GITHUB_ENV
+        echo "BOOST_DOT_VERSION=${BOOST_VERSION//_/.}" >> $GITHUB_ENV
+        echo "BOOST=boost_${BOOST_VERSION}" >> $GITHUB_ENV
+        echo "BOOST_DOT_VERSION: ${{env.BOOST_DOT_VERSION}}"
+        echo "BOOST: ${{env.BOOST}}"
     - name: Clean up
       run: rm -rf ${{env.PARENT_DIR}}/snap*_${{ matrix.arch }}.deb
     - name: Cache boost
       id: cache-boost
       uses: actions/cache@v2
       with:
-        path: boost_1_81_0
+        path: ${{env.BOOST}}
         key: ${{ runner.os }}-boost
     - name: Get boost
       if: steps.cache-boost.outputs.cache-hit != 'true'
       run: |
-        wget https://boostorg.jfrog.io/artifactory/main/release/1.81.0/source/boost_1_81_0.tar.bz2
-        tar xjf boost_1_81_0.tar.bz2
+        wget https://boostorg.jfrog.io/artifactory/main/release/${{env.BOOST_DOT_VERSION}}/source/${{env.BOOST}}.tar.bz2
+        tar xjf ${{env.BOOST}}.tar.bz2
     - name: Create deb package
       run: |
-        fakeroot make -f debian/rules CMAKEFLAGS="-DBOOST_ROOT=$GITHUB_WORKSPACE/boost_1_81_0 -DCMAKE_BUILD_TYPE:STRING=Release -DREVISION=${{ env.SHA }} -DBUILD_WITH_PULSE=OFF" binary
+        fakeroot make -f debian/rules CMAKEFLAGS="-DBOOST_ROOT=$GITHUB_WORKSPACE/${{env.BOOST}} -DCMAKE_BUILD_TYPE:STRING=Release -DREVISION=${{ env.SHA }} -DBUILD_WITH_PULSE=OFF" binary
         rename 's/_${{ matrix.arch }}/_without-pulse_${{ matrix.arch }}/g' ../snapclient*_${{ matrix.arch }}.deb
         fakeroot make -f debian/rules clean
-        fakeroot make -f debian/rules CMAKEFLAGS="-DBOOST_ROOT=$GITHUB_WORKSPACE/boost_1_81_0 -DCMAKE_BUILD_TYPE:STRING=Release -DREVISION=${{ env.SHA }}" binary
+        fakeroot make -f debian/rules CMAKEFLAGS="-DBOOST_ROOT=$GITHUB_WORKSPACE/${{env.BOOST}} -DCMAKE_BUILD_TYPE:STRING=Release -DREVISION=${{ env.SHA }}" binary
     - name: Archive artifacts
       uses: actions/upload-artifact@v2
       with:
