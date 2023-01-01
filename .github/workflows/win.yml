@@ -47,7 +47,7 @@ jobs:
         copy ${env:VCPKG_INSTALLATION_ROOT}\installed\x64-windows\bin\soxr.dll src\snapcast\bin\Release\
         copy "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\VC\Redist\MSVC\v142\vc_redist.x64.exe" src\snapcast\bin\Release\
     - name: Archive artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: develop_snapshot_win64-${{env.SHA}}
         path: |

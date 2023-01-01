@@ -49,7 +49,7 @@ jobs:
         tar -C $GITHUB_WORKSPACE/src/ -czvf ~/rpmbuild/SOURCES/snapcast.tar.gz snapcast
         rpmbuild --nodebuginfo --define '_reversion ${{ env.SHA }}' --define '_version ${{ env.VERSION }}' -bb ~/rpmbuild/SOURCES/snapcast.spec
     - name: Archive artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: snapcast_${{ matrix.arch }}-fedora-${{matrix.image}}-${{env.SHA}}
         path: ~/rpmbuild/RPMS/${{ matrix.arch }}/snap*.rpm

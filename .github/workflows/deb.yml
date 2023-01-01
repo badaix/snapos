@@ -89,7 +89,7 @@ jobs:
         fakeroot make -f debian/rules clean
         fakeroot make -f debian/rules CMAKEFLAGS="-DBOOST_ROOT=$GITHUB_WORKSPACE/${{env.BOOST}} -DCMAKE_BUILD_TYPE:STRING=Release -DREVISION=${{ env.SHA }}" binary
     - name: Archive artifacts
-      uses: actions/upload-artifact@v2
+      uses: actions/upload-artifact@v3
       with:
         name: snapcast_${{ matrix.arch }}-debian-${{matrix.image}}-${{env.SHA}}
         path: ${{env.PARENT_DIR}}/snap*_${{ matrix.arch }}.deb
