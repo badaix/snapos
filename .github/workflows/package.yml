@@ -40,6 +40,7 @@ jobs:
             image: "bookworm"
 
     runs-on: ${{ matrix.os }}
+    name: deb (${{ matrix.arch }}, ${{ matrix.image }})
 
     container:
       image: ${{matrix.image_prefix}}${{matrix.image}}${{matrix.image_suffix}}
@@ -100,6 +101,7 @@ jobs:
         xcode: ['11']
 
     runs-on: macos-latest
+    name: mac (xcode ${{ matrix.xcode }})
 
     steps:
     - name: Checkout
@@ -161,6 +163,7 @@ jobs:
             arch: "armv7hl"
 
     runs-on: ${{ matrix.os }}
+    name: rpm (fedora ${{ matrix.image }}, ${{ matrix.arch }})
 
     container:
       image: fedora:${{matrix.image}}
@@ -194,6 +197,7 @@ jobs:
 
   win:
     runs-on: windows-2019
+    name: win
 
     steps:
     - name: Checkout
