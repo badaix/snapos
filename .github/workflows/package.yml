@@ -163,7 +163,7 @@ jobs:
             arch: "armv7hl"
 
     runs-on: ${{ matrix.os }}
-    name: rpm (fedora ${{ matrix.image }}, ${{ matrix.arch }})
+    name: rpm (${{ matrix.arch }}, fedora ${{ matrix.image }})
 
     container:
       image: fedora:${{matrix.image}}
