@@ -239,7 +239,7 @@ jobs:
     - name: Archive artifacts
       uses: actions/upload-artifact@v3
       with:
-        name: develop_snapshot_win64-${{env.SHA}}
+        name: snapcast_win64-${{env.SHA}}
         path: |
           src\snapcast\bin\Release\snapclient.exe
           src\snapcast\bin\Release\FLAC.dll
