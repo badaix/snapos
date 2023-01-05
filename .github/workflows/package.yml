@@ -3,6 +3,7 @@ name: package
 on: 
   repository_dispatch:
     types: build-success
+  workflow_dispatch
   push:
     branches:
     - develop
