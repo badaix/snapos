@@ -42,6 +42,7 @@ jobs:
 
     runs-on: ${{ matrix.os }}
     name: deb (${{ matrix.arch }}, ${{ matrix.image }})
+    timeout-minutes: 240
 
     container:
       image: ${{matrix.image_prefix}}${{matrix.image}}${{matrix.image_suffix}}
