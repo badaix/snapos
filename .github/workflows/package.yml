@@ -12,7 +12,7 @@ on:
 
 env:
   BOOST_VERSION: 1_81_0
-  VERSION: develop
+  VERSION: v0.27.0
 
 jobs:
 
