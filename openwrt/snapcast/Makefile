@@ -8,14 +8,14 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME := snapcast
-PKG_VERSION := 0.26.0
+PKG_VERSION := 0.27.0
 PKG_RELEASE := $(PKG_SOURCE_VERSION)
 PKG_USE_MIPS16 := 0
 
 # PKG_MIRROR_HASH=skip
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://github.com/badaix/snapcast.git
-PKG_SOURCE_VERSION:=v0.26.0
+PKG_SOURCE_VERSION:=v0.27.0
 PKG_BUILD_DIR:=$(BUILD_DIR)/snapcast-$(PKG_VERSION)
 
 include $(INCLUDE_DIR)/package.mk
