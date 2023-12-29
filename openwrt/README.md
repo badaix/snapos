@@ -104,13 +104,13 @@ $ ./scripts/feeds install -a
 #### Build  
 In `make menuconfig` navigate to `Sound/snapcast` and select `Snapclient`
 
-Also make sure to select your device in the target settings.
+Also make sure to select your device by editing the makefile in the <wrt-sdk> directory.
 
 ```
 $ cd <wrt dir>
 $ make defconfig
 $ make menuconfig
-$ make
+$ make package/snapcast/compile
 ```
 
 The packaged `ipk` file is in  
