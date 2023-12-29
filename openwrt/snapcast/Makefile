@@ -109,7 +109,7 @@ define Package/snapclient/install
 	$(INSTALL_DIR) $(1)/etc/init.d
 	$(INSTALL_BIN) ./files/snapclient.init $(1)/etc/init.d/snapclient
 	$(INSTALL_DIR) $(1)/etc/default
-	$(INSTALL_BIN) $(PKG_BUILD_DIR)/debian/snapclient.default $(1)/etc/default/snapclient
+#	$(INSTALL_BIN) $(PKG_BUILD_DIR)/debian/snapclient.default $(1)/etc/default/snapclient
 endef
 
 $(eval $(call BuildPackage,snapserver))
