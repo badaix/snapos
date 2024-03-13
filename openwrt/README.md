@@ -110,7 +110,7 @@ Also make sure to select your device in the target settings.
 $ cd <wrt dir>
 $ make defconfig
 $ make menuconfig
-$ make
+$ make package/snapcast/compile
 ```
 
 The packaged `ipk` file is in  
